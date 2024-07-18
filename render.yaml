@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: prepwhub
+    env: python
+    region: Bahrein
+    buildCommand: ""
+    startCommand: uvicorn app.main:app --host 127.0.0.1 --port 8000
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://omirzakaminax:Amina09@prepwhub.gz5kd1v.mongodb.net/
+      - key: SECRET_KEY
+        value: Amina09
