@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 from app.models import User
 from app.schemas import UserCreate, UserLogin
 from app.database import user_collection
-from bson import ObjectId
 
 SECRET_KEY = "secret-key"
 ALGORITHM = "HS256"

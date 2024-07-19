@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from app.routes import articles, universities, calendar, pomodoro, messages, quotes
 from app.auth import auth_router
 from app.models import Article
 from app.database import article_collection
@@ -16,10 +17,16 @@ try:
     print("Pinged your deployment. You successfully connected to MongoDB!")
 except Exception as e:
     print(e)
+
 app = FastAPI()
 
 app.include_router(auth_router)
-
+app.include_router(articles.router)
+app.include_router(universities.router)
+app.include_router(calendar.router)
+app.include_router(pomodoro.router)
+app.include_router(messages.router)
+app.include_router(quotes.router)
 
 @app.get("/")
 def read_root():
