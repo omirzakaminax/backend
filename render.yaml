@@ -3,10 +3,10 @@ services:
     name: prepwhub
     env: python
     region: Bahrein
-    buildCommand: ""
+    buildCommand: "pip install -r requirements.txt"
     startCommand: uvicorn app.main:app --host 127.0.0.1 --port 8000
     envVars:
       - key: MONGODB_URI
-        value: mongodb+srv://omirzakaminax:Amina09@prepwhub.gz5kd1v.mongodb.net/
+        value: mongodb+srv://omirzakaminax:Amina09@prepwhub.gz5kd1v.mongodb.net/?retryWrites=true&w=majority&appName=prepwhub
       - key: SECRET_KEY
         value: Amina09
