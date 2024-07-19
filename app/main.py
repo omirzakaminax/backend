@@ -3,21 +3,19 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 from app.auth import auth_router
-from app.database import article_collection
+from app.database import article_collection, uri
 from app.models import Article
 from app.routes import articles
 
-uri = "mongodb+srv://omirzakaminax:Amina09@prepwhub.gz5kd1v.mongodb.net/?retryWrites=true&w=majority&appName=prepwhub"
-
 # Create a new client and connect to the server
-client = MongoClient(uri, server_api=ServerApi('1'))
+client = MongoClient(uri, server_api=ServerApi('1'), tls=True, tlsAllowInvalidCertificates=True)
 
 # Send a ping to confirm a successful connection
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
 except Exception as e:
-    print(e)
+    print("An error occurred while connecting to MongoDB: ", e)
 
 app = FastAPI()
 
