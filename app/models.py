@@ -8,7 +8,7 @@ class PyObjectId(ObjectId):
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v, values, **kwargs):
         if not ObjectId.is_valid(v):
             raise ValueError("Invalid objectid")
         return ObjectId(v)
@@ -37,5 +37,5 @@ class Article(BaseModel):
     author: str
 
     class Config:
-        populate_by_name = True
+        orm_mode = True
         json_encoders = {ObjectId: str}

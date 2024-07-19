@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from starlette.middleware.cors import CORSMiddleware
 
 from app.auth import auth_router
 from app.database import article_collection, uri
@@ -19,6 +20,14 @@ except Exception as e:
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
 app.include_router(auth_router)
 app.include_router(articles.router)
 
@@ -32,11 +41,3 @@ app.include_router(articles.router)
 @app.get("/")
 def read_root():
     return {"message": "Welcome to PrepWHub"}
-
-
-@app.get("/articles")
-async def get_articles():
-    found_articles = []
-    async for article in article_collection.find():
-        found_articles.append(Article(**article))
-    return found_articles
