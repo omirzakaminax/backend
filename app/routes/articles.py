@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter
+
+from app.database import article_collection
 from app.models import Article
 from app.schemas import ArticleCreate
-from app.database import article_collection
 
 router = APIRouter(prefix="/articles", tags=["articles"])
+
 
 @router.get("/")
 async def get_articles():
@@ -11,6 +13,7 @@ async def get_articles():
     async for article in article_collection.find():
         articles.append(Article(**article))
     return articles
+
 
 @router.post("/")
 async def create_article(article: ArticleCreate):

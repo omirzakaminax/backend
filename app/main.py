@@ -1,10 +1,11 @@
 from fastapi import FastAPI
-from app.routes import articles, universities, calendar, pomodoro, messages, quotes
-from app.auth import auth_router
-from app.models import Article
-from app.database import article_collection
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+
+from app.auth import auth_router
+from app.database import article_collection
+from app.models import Article
+from app.routes import articles
 
 uri = "mongodb+srv://omirzakaminax:Amina09@prepwhub.gz5kd1v.mongodb.net/?retryWrites=true&w=majority&appName=prepwhub"
 
@@ -22,11 +23,13 @@ app = FastAPI()
 
 app.include_router(auth_router)
 app.include_router(articles.router)
-app.include_router(universities.router)
-app.include_router(calendar.router)
-app.include_router(pomodoro.router)
-app.include_router(messages.router)
-app.include_router(quotes.router)
+
+
+# app.include_router(universities.router)
+# app.include_router(calendar.router)
+# app.include_router(pomodoro.router)
+# app.include_router(messages.router)
+# app.include_router(quotes.router)
 
 @app.get("/")
 def read_root():
@@ -35,7 +38,7 @@ def read_root():
 
 @app.get("/articles")
 async def get_articles():
-    articles = []
+    found_articles = []
     async for article in article_collection.find():
-        articles.append(Article(**article))
-    return articles
+        found_articles.append(Article(**article))
+    return found_articles
